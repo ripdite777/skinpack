@@ -1,126 +1,245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gold Source Skinpacks</title>
+    <title>Gold Source Skinpackleri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            background-color: #111; /* Daha koyu arka plan */
+            color: #eee;
+            overflow-x: hidden;
         }
         header {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 30px; /* Daha fazla padding */
             text-align: center;
-            position: relative;
-            z-index: 2;
+            border-bottom: 1px solid #333; /* Alt çizgi */
+        }
+        h1 {
+            font-size: 2.5em; /* Daha büyük başlık */
+            margin-bottom: 10px;
+        }
+        p {
+          font-size: 1.1em;
         }
         .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Daha geniş kartlar */
+            gap: 30px; /* Daha fazla boşluk */
+            max-width: 1400px; /* Daha geniş konteyner */
+            margin: 40px auto;
             padding: 20px;
-            position: relative;
-            z-index: 2;
         }
         .skinpack {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin: 15px;
-            width: 300px;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            background: rgba(40, 40, 40, 0.95); /* Daha koyu kartlar */
+            border-radius: 12px; /* Daha yuvarlak köşeler */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Daha belirgin gölge */
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid #333; /* Kart kenarlığı */
         }
         .skinpack:hover {
-            transform: scale(1.05);
+            transform: scale(1.05); /* Daha belirgin büyüme */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
         }
-        .skinpack video {
+        .skinpack img {
             width: 100%;
-            height: auto;
+            height: 250px; /* Daha yüksek resimler */
+            object-fit: cover;
+        }
+        .skinpack-info {
+            padding: 20px;
+        }
+        .description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Daha opak arka plan */
+            color: white;
+            padding: 30px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease; /* Daha yumuşak geçiş */
+            overflow-y: auto;
+            transform: translateY(100%);
+            backdrop-filter: blur(5px); /* Arka plan bulanıklığı */
+        }
+        .skinpack:hover .description {
+            opacity: 1;
+            transform: translateY(0);
         }
         .skinpack a {
-            display: block;
-            text-align: center;
-            padding: 10px;
+            display: inline-block;
+            margin-top: 20px; /* Daha fazla üst boşluk */
+            padding: 10px 20px; /* Daha büyük buton */
             background-color: #007BFF;
             color: white;
             text-decoration: none;
             font-weight: bold;
-            border-radius: 0 0 8px 8px;
+            border-radius: 8px; /* Daha yuvarlak buton */
+            transition: background-color 0.3s;
         }
         .skinpack a:hover {
             background-color: #0056b3;
         }
-        .background-video {
+        #music-controls { /* Müzik kontrolü stili */
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
+            bottom: 30px;
+            right: 30px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 100;
+            border: 1px solid #333;
         }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+        #music-toggle {
+            cursor: pointer;
+            color: white;
+            font-size: 1.1em;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            text-align: center;
+            color: #eee;
+            margin-top: 40px;
+            border-top: 1px solid #333; /* Üst çizgi */
+        }
+        ul {
+          list-style-type: disc;
+          padding-left: 20px;
+        }
+        li {
+          margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
-    <video class="background-video" autoplay muted loop>
-        <source src="background.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <div class="overlay"></div>
-    <audio autoplay loop>
-        <source src="background-music.mp3" type="audio/mp3">
-        Your browser does not support the audio tag.
-    </audio>
+
     <header>
-        <h1>Gold Source Skinpacks</h1>
-        <p>Explore and download the best skinpacks for Gold Source games!</p>
+        <h1>Gold Source Skinpackleri</h1>
+        <p>En iyi Gold Source oyun skinpacklerini keşfedin ve indirin!</p>
     </header>
+
     <div class="container">
-        <!-- Skinpack Example -->
         <div class="skinpack">
-            <video controls>
-                <source src="video1.mp4" type="video/mp4">
-                <p>Video format not supported. Please update your browser.</p>
+            <video autoplay muted loop playsinline>
+                <source src="videos/skinpack1.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
             </video>
-            <a href="https://example.com/download/skinpack1" target="_blank">Download Skinpack 1</a>
+            <div class="skinpack-info">
+                <h3>Skinpack 1 - Taktiksel Set</h3>
+                <p>Teması: Modern Taktiksel</p>
+            </div>
+            <div class="description">
+                <h3>Skinpack 1 Açıklaması</h3>
+                <p>Bu skinpack modern savaş temalı silah görünümleri içerir. AK-47, M4A1, AWP, Glock gibi popüler silahlar için özel tasarımlar bulunur. Yüksek çözünürlüklü dokular ve gerçekçi detaylar oyun deneyiminizi zenginleştirecek.</p>
+                <ul>
+                    <li>İçerdiği silahlar: AK-47, M4A1, AWP, Glock</li>
+                    <li>Uyumlu oyunlar: Counter-Strike 1.6, Half-Life 1</li>
+                </ul>
+                <a href="#" target="_blank">İndir</a>
+            </div>
         </div>
         <div class="skinpack">
-            <video controls>
-                <source src="video2.mp4" type="video/mp4">
-                <p>Video format not supported. Please update your browser.</p>
+            <video autoplay muted loop playsinline>
+                <source src="videos/skinpack2.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
             </video>
-            <a href="https://example.com/download/skinpack2" target="_blank">Download Skinpack 2</a>
+            <div class="skinpack-info">
+                <h3>Skinpack 2 - Fütüristik Paket</h3>
+                <p>Teması: Yüksek Teknoloji</p>
+            </div>
+            <div class="description">
+                <h3>Skinpack 2 Açıklaması</h3>
+                <p>Bu skinpack ile oyununuza fütüristik bir hava katın. Plazma tüfekleri, enerji kılıçları ve daha birçok yüksek teknoloji ürünü silah görünümü sizi bekliyor.</p>
+                <ul>
+                    <li>İçerdiği silahlar: Plazma Tüfeği, Enerji Kılıcı</li>
+                    <li>Uyumlu Oyunlar: Half-Life 1, Opposing Force</li>
+                </ul>
+                <a href="#" target="_blank">İndir</a>
+            </div>
         </div>
         <div class="skinpack">
-            <video controls>
-                <source src="video3.mp4" type="video/mp4">
-                <p>Video format not supported. Please update your browser.</p>
+            <video autoplay muted loop playsinline>
+                <source src="videos/skinpack3.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
             </video>
-            <a href="https://example.com/download/skinpack3" target="_blank">Download Skinpack 3</a>
+            <div class="skinpack-info">
+                <h3>Skinpack 3 - Klasik Görünüm</h3>
+                <p>Teması: Retro/Klasik</p>
+            </div>
+            <div class="description">
+                <h3>Skinpack 3 Açıklaması</h3>
+                <p>Oyunların nostaljik havasını sevenler için tasarlandı. Klasik silah görünümleri, düşük çözünürlüklü dokular ve retro tarzı efektlerle geçmişe yolculuk yapın.</p>
+                <ul>
+                    <li>İçerdiği silahlar: Colt 1911, MP5</li>
+                    <li>Uyumlu Oyunlar: Counter-Strike 1.6, Half-Life 1</li>
+                </ul>
+                <a href="#" target="_blank">İndir</a>
+            </div>
         </div>
         <div class="skinpack">
-            <video controls>
-                <source src="video4.mp4" type="video/mp4">
-                <p>Video format not supported. Please update your browser.</p>
+            <video autoplay muted loop playsinline>
+                <source src="videos/skinpack4.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
             </video>
-            <a href="https://example.com/download/skinpack4" target="_blank">Download Skinpack 4</a>
+            <div class="skinpack-info">
+                <h3>Skinpack 4 - Çöl Kamuflajı</h3>
+                <p>Teması: Çöl Savaşı</p>
+            </div>
+            <div class="description">
+                <h3>Skinpack 4 Açıklaması</h3>
+                <p>Çöl ortamlarına uygun kamuflaj desenleriyle tasarlanmış bu skinpack, gerçekçi bir savaş deneyimi sunar.</p>
+                <ul>
+                    <li>İçerdiği silahlar: M4A1, AK-47</li>
+                    <li>Uyumlu Oyunlar: Counter-Strike: Source</li>
+                </ul>
+                <a href="#" target="_blank">İndir</a>
+            </div>
         </div>
-    </div>
-</body>
-</html>
+        <div class="skinpack">
+            <video autoplay muted loop playsinline>
+                <source src="videos/skinpack5.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
+            </video>
+            <div class="skinpack-info">
+                <h3>Skinpack 5 - Kış Teması</h3>
+                <p>Teması: Karlı Ortamlar</p>
+            </div>
+            <div class="description">
+                <h3>Skinpack 5 Açıklaması</h3>
+                <p>Kış temalı bu skinpack, silahlarınıza kar ve buz desenleri ekleyerek soğuk ve zorlu koşullara uygun bir görünüm kazandırır.</p>
+                <ul>
+                    <li>İçerdiği silahlar: Arctic Warfare Magnum (AWP), MP5</li>
+                    <li>Uyumlu Oyunlar: Counter-Strike 1.6</li>
+                </ul>
+                <a href="#" target="_blank">İndir</a>
+            </div>
+        </div>
+        <div class="skinpack">
+            <video autoplay muted loop playsinline>
+                <source src="videos/skinpack6.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
+            </video>
+            <div class="skinpack-info">
+                <h3>Skinpack 6 - Neon Işıklar</h3>
+                <p>Teması: Neon/Gece</p>
+            </div>
+            <div class="description">
+                <h3>Skinpack 6 Açıklaması</h3>
+                <p>Gece haritaları ve neon ışıklarını sevenler için tasarlandı. Silahlarınıza parlak neon renkleri ve ışık efektleri ekleyerek oyununuza canlılık katın.</p>
+                <ul>
+                    <li>İçerdiği silahlar: P90, Desert Eagle</li>
+                    <li>Uyumlu Oyunlar: Counter-Strike
