@@ -38,23 +38,23 @@ p {
 }
 
 .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    display: flex; /* Kutu düzenini etkinleştir */
+    flex-wrap: wrap; /* Gerekirse alt satıra geçmesini sağla */
+    justify-content: center; /* Yatayda ortala */
+    gap: 20px; /* Kutular arası boşluk */
 }
 
 .skinpack {
-    position: relative;
-    overflow: hidden;
-    background: rgba(40, 40, 40, 0.95);
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s, box-shadow 0.3s; /* Hover efekti için geçişler */
-    cursor: pointer;
-    border: 1px solid #333;
+    width: 400px; /* Kutuların genişliği */
+    border: 1px solid #ccc; /* İsteğe bağlı kenarlık */
+    padding: 10px; /* İsteğe bağlı iç boşluk */
+    box-sizing: border-box; /* Kenarlık ve iç boşluğun genişliğe dahil edilmesini sağlar */
+}
+
+.skinpack video {
+    width: 100%; /* Videonun konteynerin genişliğini kaplamasını sağlar */
+    height: auto; /* Yüksekliği otomatik ayarlar, en boy oranını korur */
+    display: block; /* Videonun altında boşluk oluşmasını engeller */
 }
 
 .skinpack:hover {
@@ -66,10 +66,6 @@ p {
     width: 100%;
     height: 200px;
     object-fit: cover;
-}
-
-.skinpack video::-webkit-media-controls { /* Video kontrollerini gizle */
-    display: none !important;
 }
 
 .skinpack-info {
